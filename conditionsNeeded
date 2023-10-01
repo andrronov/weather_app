@@ -1,0 +1,41 @@
+! feelslike_c
+feelslike_f 
+64.4
+! gust_kph 
+16.6
+gust_mph 
+10.3
+! humidity 
+60
+! is_day 
+1
+last_updated 
+"2023-09-28 130"
+last_updated_epoch 
+1695889800
+precip_in 
+0
+! precip_mm (downfall)
+0
+pressure_in 
+30.36
+! pressure_mb 
+1028
+temp_c 
+18
+temp_f 
+64.4
+uv 
+5
+vis_km ????
+10
+vis_miles 
+6
+wind_degree 
+240
+wind_dir 
+"WSW"
+! wind_kph 
+19.1
+wind_mph 
+11.9
