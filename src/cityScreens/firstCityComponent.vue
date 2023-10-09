@@ -1,21 +1,38 @@
 <template>
-   <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue>
-  <div :id="isDay" class="weather__windows_grid">
-    <div class="currentWeatherWindow">
-        <currentWeatherComponentVue
-          :city="city"
-          :currentTemperature="currentTemperature"
-          :feelsLikeTemp="feelsLikeTemp"
-          :conditionText="conditionText"
+   <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue> 
+    <div :id="isDay" class="weather__windows_grid">
+      <div class="currentWeatherWindow _window">
+          <currentWeatherComponentVue
+            :city="city"
+            :currentTemperature="currentTemperature"
+            :feelsLikeTemp="feelsLikeTemp"
+            :conditionText="conditionText"
+            :conditionIcon="conditionIcon"
+            :isDay="isDay"
+          >
+          </currentWeatherComponentVue>
+      </div>
+      <div class="duringDayWeather _window">
+        <duringDayWeatherComponentVue>
+
+        </duringDayWeatherComponentVue>
+      </div>
+      <div class="windWeather _window">
+        <windComponent
+        :gustSpeed="gustSpeed"
+        :humidity="humidity"
+        :currentWindDirection="currentWindDirection"
         >
-        </currentWeatherComponentVue>
+        </windComponent>
+      </div>
     </div>
-  </div>
   <!-- <h1>Hello, {{ this.userName }}!</h1> -->
 </template>
 
 <script>
-import currentWeatherComponentVue from "../components/currentWeatherComponent.vue";
+import currentWeatherComponentVue from "@/components/currentWeatherComponent.vue";
+import duringDayWeatherComponentVue from '@/components/duringDayWeatherComponent.vue';
+import windComponent from "@/components/windComponent.vue";
 import { fetchCurrentWeatherDataCelsius } from "../APIs/currentWeatherCelsiusApi";
 import welcomeModalVue from "@/components/welcomeModal.vue";
 
@@ -23,6 +40,8 @@ export default {
   name: "firstCityComponent",
   components: {
     currentWeatherComponentVue,
+    duringDayWeatherComponentVue,
+    windComponent,
     welcomeModalVue,
   },
   data() {
@@ -31,48 +50,43 @@ export default {
 
       userName: "",
       city: "",
-      currentLanguage: "ru",
+      currentLanguage: "us",
 
       currentTemperature: null,
       feelsLikeTemp: null,
       conditionText: "",
       gustSpeed: null,
       humidity: null,
-      isDay: true,
+      isDay: "",
       currentDownfall: null,
       currentPressure: null,
       currentWindDirection: "",
+      conditionIcon: "",
     };
   },
   methods: {
     async fetchData() {
       try {
         const API_key = "7aecaa5e837b4dd09c3155109232609";
-        const enteredCity = this.city; // Замените на вашу переменную
+        const enteredCity = this.city;
         const currentLanguage = this.currentLanguage;
 
-        const weatherData = await fetchCurrentWeatherDataCelsius(
-          API_key,
-          enteredCity,
-          currentLanguage
-        );
+        const weatherData = await fetchCurrentWeatherDataCelsius( API_key, enteredCity, currentLanguage );
         this.currentTemperature = weatherData.currentTemp;
         this.feelsLikeTemp = weatherData.feelsLike;
         this.conditionText = weatherData.tempText;
         this.gustSpeed = weatherData.gustSpeed;
         this.humidity = weatherData.currentHumidity;
         this.isDay = weatherData.isDay;
-        if(this.isDay){
-          this.isDay = "idDay";
-        } else {
-          this.isDay = "idNight";
-        }
+        this.conditionIcon = weatherData.conditionIcon.substring(weatherData.conditionIcon.length - 7);
+        this.isDay ? this.isDay = "day" : this.isDay = "night";
         this.currentDownfall = weatherData.currentDownfall;
         this.currentPressure = weatherData.currentPressure;
         this.currentWindDirection = weatherData.currentWindDirection;
       } catch (error) {
         console.error(error);
       }
+      console.log(this.conditionIcon);
     },
     handleDataConfirmed(data) {
       this.userName = data.userName;

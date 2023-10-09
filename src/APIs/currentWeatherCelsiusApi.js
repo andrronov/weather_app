@@ -20,5 +20,6 @@ export async function fetchCurrentWeatherDataCelsius(API_key, enteredCity, lang)
     currentPressure: dataCurrent.pressure_mb,
     currentWindDirection: dataCurrent.wind_dir,
     currentWindSpeed: dataCurrent.wind_kph,
+    conditionIcon: dataCurrent.condition.icon,
    };
 }
