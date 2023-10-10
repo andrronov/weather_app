@@ -22,8 +22,18 @@
         :gustSpeed="gustSpeed"
         :humidity="humidity"
         :currentWindDirection="currentWindDirection"
+        :currentDownfall="currentDownfall"
+        :visibilityKm="visibilityKm"
+        :currentPressure="currentPressure"
+        :currentWindSpeed="currentWindSpeed"
         >
         </windComponent>
+      </div>
+      <div class="astroWeather _window">
+        <astronomyComponent></astronomyComponent>
+      </div>
+      <div class="nextWeather _window">
+        <nextDaysComponent></nextDaysComponent>
       </div>
     </div>
   <!-- <h1>Hello, {{ this.userName }}!</h1> -->
@@ -32,6 +42,8 @@
 <script>
 import currentWeatherComponentVue from "@/components/currentWeatherComponent.vue";
 import duringDayWeatherComponentVue from '@/components/duringDayWeatherComponent.vue';
+import astronomyComponent from '@/components/astronomyComponent.vue';
+import nextDaysComponent from '@/components/nextDaysComponent.vue';
 import windComponent from "@/components/windComponent.vue";
 import { fetchCurrentWeatherDataCelsius } from "../APIs/currentWeatherCelsiusApi";
 import welcomeModalVue from "@/components/welcomeModal.vue";
@@ -42,6 +54,8 @@ export default {
     currentWeatherComponentVue,
     duringDayWeatherComponentVue,
     windComponent,
+    astronomyComponent,
+    nextDaysComponent,
     welcomeModalVue,
   },
   data() {
@@ -62,6 +76,8 @@ export default {
       currentPressure: null,
       currentWindDirection: "",
       conditionIcon: "",
+      visibilityKm: 0,
+      currentWindSpeed: 0,
     };
   },
   methods: {
@@ -83,6 +99,8 @@ export default {
         this.currentDownfall = weatherData.currentDownfall;
         this.currentPressure = weatherData.currentPressure;
         this.currentWindDirection = weatherData.currentWindDirection;
+        this.visibilityKm = weatherData.visibilityKm;
+        this.currentWindSpeed = weatherData.currentWindSpeed;
       } catch (error) {
         console.error(error);
       }

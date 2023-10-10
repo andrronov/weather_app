@@ -41,8 +41,8 @@ html, body {
 .currentWeatherWindow { grid-area: 1 / 1 / 2 / 2; }
 .duringDayWeather { grid-area: 1 / 2 / 2 / 3; }
 .windWeather { grid-area: 2 / 1 / 3 / 2; }
-.div4 { grid-area: 3 / 1 / 4 / 2; }
-.div5 { grid-area: 2 / 2 / 4 / 3; }
+.astroWeather { grid-area: 3 / 1 / 4 / 2; }
+.nextWeather { grid-area: 2 / 2 / 4 / 3; }
 
 #day{
    background-color: #87ceeb; /* голубой цвет фона */
@@ -64,6 +64,7 @@ html, body {
     #00002C,
     #04004F
   );
+  color: white;
 }
 
 
@@ -94,5 +95,31 @@ html, body {
       align-items: center;
       font-size: 1.5rem;
       font-weight: 500;
+   }
+}
+
+
+
+
+
+
+
+.wind__content{
+   height: 75%;
+   .wind__content_list{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      position: relative;
+
+      li{
+         font-size: 1.35rem;
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         width: 75%;
+      }
    }
 }

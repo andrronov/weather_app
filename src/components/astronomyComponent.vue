@@ -1,9 +1,10 @@
 <template>
-  During day
+  Astro
 </template>
 
 <script>
 export default {
+
 }
 </script>
 

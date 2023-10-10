@@ -8,7 +8,7 @@ export async function fetchCurrentWeatherDataCelsius(API_key, enteredCity, lang)
   
   const data = await response.json();
   const dataCurrent = data.current;
-  // console.log(data);
+  console.log(dataCurrent);
   return {
     currentTemp: dataCurrent.temp_c,
     feelsLike: dataCurrent.feelslike_c,
@@ -21,5 +21,6 @@ export async function fetchCurrentWeatherDataCelsius(API_key, enteredCity, lang)
     currentWindDirection: dataCurrent.wind_dir,
     currentWindSpeed: dataCurrent.wind_kph,
     conditionIcon: dataCurrent.condition.icon,
+    visibilityKm: dataCurrent.vis_km,
    };
 }
