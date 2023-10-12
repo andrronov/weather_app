@@ -8,7 +8,7 @@
 
 <script>
 import firstCityComponentVue from "./cityScreens/firstCityComponent.vue";
-import loadingScreen from "./components/loadingScreen.vue";
+import loadingScreen from "@/components/modals/loadingScreen.vue";
 // import welcomeModalVue from "./components/welcomeModal.vue";
 export default {
   name: "App",

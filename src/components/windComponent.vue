@@ -6,7 +6,8 @@
       <li><p>Air humidity:</p> <p>{{ humidity }}%</p></li>
       <li><p>Wind direction:</p> <p>{{ currentWindDirection }}</p></li>
       <li><p>Downfall:</p> <p>{{ currentDownfall }}mm</p></li>
-      <li><p>Air pressure:</p> <p>{{ currentPressure }}mb</p></li>
+      <li><p>Visibility:</p> <p>{{ visibilityKm }} km</p></li>
+      <!-- <li><p>Air pressure:</p> <p>{{ currentPressure }}mb</p></li> -->
     </ul>
   </div>
 </template>
@@ -40,8 +41,6 @@ props: {
     type: Number,
     default: -999,
   },
-  // НЕ ИСПОЛЬЗОВАЛ VISIBILITY!!!!
-
   currentPressure: {
     type: Number,
     default: -999,

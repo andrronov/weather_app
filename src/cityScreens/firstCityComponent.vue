@@ -1,40 +1,44 @@
 <template>
+  <div class="idd">
    <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue> 
-    <div :id="isDay" class="weather__windows_grid">
-      <div class="currentWeatherWindow _window">
-          <currentWeatherComponentVue
-            :city="city"
-            :currentTemperature="currentTemperature"
-            :feelsLikeTemp="feelsLikeTemp"
-            :conditionText="conditionText"
-            :conditionIcon="conditionIcon"
-            :isDay="isDay"
-          >
-          </currentWeatherComponentVue>
-      </div>
-      <div class="duringDayWeather _window">
-        <duringDayWeatherComponentVue>
+   <new-city-modal @close-modal="modalShowed = false" v-if="modalShowed"></new-city-modal>
+   <headerComponent @open-city-modal="openCityModal" :isDay="isDay" :userName="userName" :city="city"></headerComponent> 
+   <div :id="isDay" class="weather__windows_grid">
+        <div class="currentWeatherWindow _window _wind_backgrounded">
+            <currentWeatherComponentVue
+              :city="city"
+              :currentTemperature="currentTemperature"
+              :feelsLikeTemp="feelsLikeTemp"
+              :conditionText="conditionText"
+              :conditionIcon="conditionIcon"
+              :isDay="isDay"
+            >
+            </currentWeatherComponentVue>
+        </div>
+        <div class="duringDayWeather _window _wind_bordered">
+          <duringDayWeatherComponentVue>
 
-        </duringDayWeatherComponentVue>
-      </div>
-      <div class="windWeather _window">
-        <windComponent
-        :gustSpeed="gustSpeed"
-        :humidity="humidity"
-        :currentWindDirection="currentWindDirection"
-        :currentDownfall="currentDownfall"
-        :visibilityKm="visibilityKm"
-        :currentPressure="currentPressure"
-        :currentWindSpeed="currentWindSpeed"
-        >
-        </windComponent>
-      </div>
-      <div class="astroWeather _window">
-        <astronomyComponent></astronomyComponent>
-      </div>
-      <div class="nextWeather _window">
-        <nextDaysComponent></nextDaysComponent>
-      </div>
+          </duringDayWeatherComponentVue>
+        </div>
+        <div class="windWeather _window _wind_bordered">
+          <windComponent
+          :gustSpeed="gustSpeed"
+          :humidity="humidity"
+          :currentWindDirection="currentWindDirection"
+          :currentDownfall="currentDownfall"
+          :visibilityKm="visibilityKm"
+          :currentPressure="currentPressure"
+          :currentWindSpeed="currentWindSpeed"
+          >
+          </windComponent>
+        </div>
+        <div class="astroWeather _window _wind_bordered">
+          <astronomyComponent></astronomyComponent>
+        </div>
+        <div class="nextWeather _window _wind_backgrounded">
+          <nextDaysComponent></nextDaysComponent>
+        </div>
+    </div>
     </div>
   <!-- <h1>Hello, {{ this.userName }}!</h1> -->
 </template>
@@ -46,7 +50,9 @@ import astronomyComponent from '@/components/astronomyComponent.vue';
 import nextDaysComponent from '@/components/nextDaysComponent.vue';
 import windComponent from "@/components/windComponent.vue";
 import { fetchCurrentWeatherDataCelsius } from "../APIs/currentWeatherCelsiusApi";
-import welcomeModalVue from "@/components/welcomeModal.vue";
+import welcomeModalVue from "../components/modals/welcomeModal.vue";
+import headerComponent from "@/components/dom/headerComponent.vue";
+import newCityModal from "@/components/modals/newCityModal.vue";
 
 export default {
   name: "firstCityComponent",
@@ -57,10 +63,13 @@ export default {
     astronomyComponent,
     nextDaysComponent,
     welcomeModalVue,
+    headerComponent,
+    newCityModal,
   },
   data() {
     return {
       showModal: true,
+      modalShowed: false,
 
       userName: "",
       city: "",
@@ -117,6 +126,10 @@ export default {
       localStorage.username = this.userName;
       localStorage.city = this.city;
     },
+    openCityModal(data){
+      this.modalShowed = data.modalShowed;
+      console.log(this.modalShowed);
+    }
   },
   mounted() {
     if (localStorage.username) {
@@ -127,6 +140,7 @@ export default {
     }
 
     this.fetchData();
+    console.log(this.modalShowed);
   },
   created() {
     const showModalWind = localStorage.getItem("showModal");

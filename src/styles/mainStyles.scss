@@ -31,12 +31,19 @@ html, body {
 // } //NULLSTYLES (WORKING)
 
 
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+
+body{
+   font-family: 'Delius', cursive;
+}
+
 .weather__windows_grid {
    position: fixed; top: 0; right: 0; bottom: 0; left: 0;
    display: grid; grid-template-columns: 1fr 1.15fr;
    grid-template-rows: repeat(3, 1fr);
    grid-column-gap: 5%; grid-row-gap: 5%;
-   padding: 70px;
+   padding: 50px 2.5%;
+   margin-top: 35px;
 }
 .currentWeatherWindow { grid-area: 1 / 1 / 2 / 2; }
 .duringDayWeather { grid-area: 1 / 2 / 2 / 3; }
@@ -45,11 +52,10 @@ html, body {
 .nextWeather { grid-area: 2 / 2 / 4 / 3; }
 
 #day{
-   background-color: #87ceeb; /* голубой цвет фона */
-   background-image: linear-gradient(to bottom, #87ceeb, #ffffff); /* градиент от голубого к белому */
-   background-repeat: no-repeat; /* запрет повторения фона */
-   background-attachment: fixed; /* фон зафиксирован на месте при прокрутке */
-
+   // background-color: #87ceeb; /* голубой цвет фона */
+   // background-image: linear-gradient(to bottom, #87ceeb, #ffffff); /* градиент от голубого к белому */
+   // background-repeat: no-repeat; /* запрет повторения фона */
+   // background-attachment: fixed; /* фон зафиксирован на месте при прокрутке */
    ._window{}
    .currentWeatherWindow{
       .city__title{}
@@ -57,14 +63,30 @@ html, body {
 }
 
 #night{
-   background: linear-gradient(
-    135deg,
-    #00002C,
-    #04004F,
-    #00002C,
-    #04004F
-  );
+//    background: linear-gradient(
+//     135deg,
+//     #00002C,
+//     #04004F,
+//     #00002C,
+//     #04004F
+//   );
+   background:repeat center/65% url("../images/background/background-night.jpg");
   color: white;
+  ._wind_backgrounded{
+   background-color: rgba(91, 68, 173, 0.208);
+}
+._wind_bordered{
+   border: solid rgb(44, 44, 71) 3px;
+}
+._detailed{
+   color: rgb(91, 68, 173);
+   background-color: rgba(242, 236, 255, 0.91);
+   border-radius: 10px;
+}
+._font{
+   font-size: 1.75rem;
+   padding: 2px;
+}
 }
 
 
@@ -72,17 +94,17 @@ html, body {
    display: flex;
    flex-direction: column;
    border-radius: 35px;
-   border: solid rgb(4, 0, 255) 3px;
    justify-content: center;
    gap: 10%;
 }
-
+._detailed{
+   font-size: 4rem;
+}
 
 .currentWeatherWindow{
-   background-color: rgba(55, 0, 255, 0.208);
    .city__title{
-      h3{font-size: 3rem; font-weight: 600;}
-      font-size: 5rem;
+      h3{font-size: 2.65rem; font-weight: 400;}
+      font-size: 3.5rem;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
@@ -115,11 +137,18 @@ html, body {
       position: relative;
 
       li{
-         font-size: 1.35rem;
+         font-size: 1.1rem;
          display: flex;
          flex-direction: row;
          justify-content: space-between;
          width: 75%;
       }
+      li:nth-child(odd){
+         background-color: rgba(91, 68, 173, 0.221);
+      }
    }
+}
+
+header{
+   z-index: 10;
 }

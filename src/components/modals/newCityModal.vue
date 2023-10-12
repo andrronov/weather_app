@@ -2,33 +2,34 @@
    <div class="modalWrap">
       <div class="wrapper">
          <h1>Hello!</h1>
-         <input v-model="userName" type="text">Write your name:
          <input @keydown.enter="confirm" v-model="userCity" type="text">Write city:
          <button @click="confirm">Confirm</button>
+         <button @click="closeModal">Close</button>
       </div>
   </div>
 </template>
 
 <script>
 export default {
-name: "welcomeModalVue",
+name: "newCityModal",
 
 data(){
    return{
-      userName: "",
       userCity: "",
-      showModal: true,
+      showCityModal: true,
    }
    },
    methods: {
       confirm(){
-         this.showModal = false;
-         this.$emit("dataConfirmed", {
-            userName: this.userName,
+         this.$emit("newCityData", {
             userCity: this.userCity,
-            showModal: this.showModal,
+            showCityModal: this.showCityModal,
          });
-      }
+         // ЕЩЕ НЕ ОТПРАВИЛ ЭМИТЫ РОДИТЕЛЮ!!!
+      },
+      closeModal(){
+         this.$emit("closeModal", {showCityModal: false});
+      },
    },
 }
 </script>
@@ -40,7 +41,9 @@ data(){
    width: 100%;
    position: absolute;
    background: fixed;
+   overflow: hidden;
    background-color: rgb(52, 89, 126);
+   z-index: 90;
 }
 .wrapper{
    position: relative;

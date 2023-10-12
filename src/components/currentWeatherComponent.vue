@@ -1,6 +1,6 @@
 <template>
-  <div class="city__title"><h3>{{ city }}</h3> {{ currentTemperature }}°</div>
-  <div class="city__description"><h5>{{ conditionText }}</h5><h4>Feels like: {{ feelsLikeTemp }}°</h4></div>
+  <div class="city__title"><h3>{{ city }}</h3> <p class="_detailed">{{ currentTemperature }}°</p></div>
+  <div class="city__description"><h5 class="_detailed _font">{{ conditionText }}</h5><h4>Feels like: {{ feelsLikeTemp }}°</h4></div>
   <!-- <img :src='`../../src/images/${isDay}/${conditionIcon}`' alt="aaa"> -->
   <!-- <img src='../../src/images/night/116.png' alt="aaa"> -->
 </template>
