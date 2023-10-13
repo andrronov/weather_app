@@ -1,10 +1,14 @@
 <template>
    <div class="modalWrap">
       <div class="wrapper">
-         <h1>Hello!</h1>
-         <input @keydown.enter="confirm" v-model="userCity" type="text">Write city:
-         <button @click="confirm">Confirm</button>
-         <button @click="closeModal">Close</button>
+         <label for="newCity" class="form__content">
+            <p>Write city:</p>
+            <input @keydown.enter="confirm" v-model="userCity" type="text">
+            <div class="form__content_buttons">
+               <button class=" form__button _confirm" @click="confirm">Confirm</button>
+               <button class="form__button" @click="closeModal">Close</button>
+            </div>
+         </label>
       </div>
   </div>
 </template>
@@ -50,6 +54,6 @@ data(){
    display: flex;
    align-items: center;
    flex-direction: column;
-   top: 50%;
+   justify-content: center;
 }
 </style>

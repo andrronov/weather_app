@@ -90,6 +90,7 @@ methods: {
   align-items: center;
   height: 35px;
   z-index: 80;
+  color: rgb(44, 44, 44);
 }
 .header__cities_list{
   min-width: 20%;

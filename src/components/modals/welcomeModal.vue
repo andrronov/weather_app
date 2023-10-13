@@ -36,6 +36,7 @@ data(){
 
 <style lang="scss" scoped>
 .modalWrap{
+   overflow: hidden;
    z-index: 99;
    height: 100%;
    width: 100%;
@@ -48,6 +49,6 @@ data(){
    display: flex;
    align-items: center;
    flex-direction: column;
-   top: 50%;
+   justify-content: center;
 }
 </style>

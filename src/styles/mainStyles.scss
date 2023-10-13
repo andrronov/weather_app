@@ -56,9 +56,26 @@ body{
    // background-image: linear-gradient(to bottom, #87ceeb, #ffffff); /* градиент от голубого к белому */
    // background-repeat: no-repeat; /* запрет повторения фона */
    // background-attachment: fixed; /* фон зафиксирован на месте при прокрутке */
+   background: repeat center/100% url("../images/background/background-day.jpg");
    ._window{}
    .currentWeatherWindow{
       .city__title{}
+   }
+   ._wind_backgrounded{
+      background-color: rgba(10, 70, 94, 0.314);
+   }
+   ._wind_bordered{
+      border: 3px solid rgb(178, 247, 255);
+   }
+   ._detailed{
+      color: rgb(214, 251, 255);
+      background-color: rgb(3, 59, 82);
+      padding: 2.5px;
+      border-radius: 10px;
+   }
+   ._font{
+      font-size: 1.75rem;
+      padding: 3.5px;
    }
 }
 
@@ -122,9 +139,9 @@ body{
 
 
 
-
-
-
+button{
+   cursor: pointer;
+}
 
 .wind__content{
    height: 75%;
@@ -151,4 +168,54 @@ body{
 
 header{
    z-index: 10;
+}
+
+
+.form__content{
+   scale: 1.1;
+   display: flex;
+   flex-direction: column;
+   min-height: 150px;
+   justify-content: space-between;
+   p{
+      font-size: 2.35rem;
+      background-color: white;
+      color: rgb(52, 89, 126);
+      padding: 3.5px;
+      border-radius: 5px;
+   }
+   .form__content_buttons{
+      display: flex; flex-direction: row;
+      justify-content: space-between;
+      .form__button{
+         background: none;
+         border: 2px solid white;
+         padding: 5px;
+         color: white;
+      }
+      ._confirm{
+         background: white;
+         color: rgb(52, 89, 126);
+      }
+      .form__button:hover{
+         background: white;
+         color: rgb(52, 89, 126);
+      }
+      ._confirm:hover{
+         background-color: rgb(212, 212, 212);
+      }
+   }
+}
+@media (min-width: 769px) {
+   .form__content{
+      scale: 1.5;
+   }
+}
+
+input{
+   background: white;
+   padding: 3.5px;
+   border-radius: 5px;
+   width: 100%;
+   outline: none;
 }
