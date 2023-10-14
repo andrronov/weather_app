@@ -22,6 +22,7 @@
 
 <script>
 export default {
+<<<<<<< Updated upstream
 props: {
   userName: {
     type: String,
@@ -35,6 +36,24 @@ props: {
     type: String,
     default: "day",
   },
+=======
+  props: {
+    userName: {
+      type: String,
+      default: "Not found",
+    },
+    city: {
+      type: String,
+      deafult: "Not found",
+    },
+    isDay: {
+      type: String,
+      default: "day",
+    },
+    cities: {
+      type: Array,
+    }
+>>>>>>> Stashed changes
 },
 data(){
   return{
