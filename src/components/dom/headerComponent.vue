@@ -4,7 +4,7 @@
       <div class="header">
         <p>Good afternoon, <span class="marked">{{ userName }}</span>!</p>
         <div class="header__cities_list">
-          <li v-for="city in cities" :key="city.id" class="marked">{{ city }}</li>
+          <li class="marked">{{ city }}</li>
         </div>
         <div class="header__addcity">
           <button @click="openNewCityModal" class="header__button">Add new city</button>
@@ -35,9 +35,6 @@ props: {
     type: String,
     default: "day",
   },
-  cities: {
-    type: Array,
-  }
 },
 data(){
   return{
@@ -97,10 +94,6 @@ methods: {
 }
 .header__cities_list{
   min-width: 20%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 .header__button{
   padding: 5px;

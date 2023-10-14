@@ -1,8 +1,8 @@
 <template>
   <div class="idd">
    <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue> 
-   <new-city-modal @new-city-data="addCity" @close-modal="modalShowed = false" v-if="modalShowed"></new-city-modal>
-   <headerComponent @open-city-modal="openCityModal" :isDay="isDay" :userName="userName" :city="city" :cities="cities"></headerComponent> 
+   <new-city-modal @close-modal="modalShowed = false" v-if="modalShowed"></new-city-modal>
+   <headerComponent @open-city-modal="openCityModal" :isDay="isDay" :userName="userName" :city="city"></headerComponent> 
    <div :id="isDay" class="weather__windows_grid">
         <div class="currentWeatherWindow _window _wind_backgrounded">
             <currentWeatherComponentVue
@@ -73,7 +73,6 @@ export default {
 
       userName: "",
       city: "",
-      cities: [],
       currentLanguage: "us",
 
       currentTemperature: null,
@@ -119,7 +118,6 @@ export default {
     handleDataConfirmed(data) {
       this.userName = data.userName;
       this.city = data.userCity;
-      this.cities.push(data.userCity);
       this.showModal = data.showModal;
       localStorage.setItem("showModal", JSON.stringify(this.showModal));
 
@@ -127,18 +125,10 @@ export default {
 
       localStorage.username = this.userName;
       localStorage.city = this.city;
-      // localStorage.cities = this.cities;
-      localStorage.setItem("citiesArray", JSON.stringify(this.cities));
     },
     openCityModal(data){
       this.modalShowed = data.modalShowed;
       console.log(this.modalShowed);
-    },
-    addCity(data){
-     this.cities.push(data.userCity);
-     this.modalShowed = data.showCitiModal;
-     localStorage.setItem("citiesArray", JSON.stringify(this.cities));
-    //  console.log(this.cities); 
     }
   },
   mounted() {
@@ -148,21 +138,14 @@ export default {
     if (localStorage.city) {
       this.city = localStorage.city;
     }
-    if(localStorage.cities){
-      this.cities = localStorage.cities;
-    }
 
     this.fetchData();
     console.log(this.modalShowed);
   },
   created() {
     const showModalWind = localStorage.getItem("showModal");
-    const citiesAll = localStorage.getItem("citiesArray");
     if (showModalWind) {
       this.showModal = JSON.parse(showModalWind);
-    }
-    if(citiesAll){
-      this.cities = JSON.parse(citiesAll);
     }
   },
 };
