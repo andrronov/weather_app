@@ -16,8 +16,10 @@
             </currentWeatherComponentVue>
         </div>
         <div class="duringDayWeather _window _wind_bordered">
-          <duringDayWeatherComponentVue>
-
+          <duringDayWeatherComponentVue
+          :city="city"
+          :currentLanguage="currentLanguage"
+          >
           </duringDayWeatherComponentVue>
         </div>
         <div class="windWeather _window _wind_bordered">
@@ -33,7 +35,9 @@
           </windComponent>
         </div>
         <div class="astroWeather _window _wind_bordered">
-          <astronomyComponent></astronomyComponent>
+          <astronomyComponent :city="city" :currentLanguage="currentLanguage"
+          >
+          </astronomyComponent>
         </div>
         <div class="nextWeather _window _wind_backgrounded">
           <nextDaysComponent></nextDaysComponent>
@@ -114,7 +118,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
-      console.log(this.conditionIcon);
+      // console.log(this.conditionIcon);
     },
     handleDataConfirmed(data) {
       this.userName = data.userName;
@@ -132,7 +136,7 @@ export default {
     },
     openCityModal(data){
       this.modalShowed = data.modalShowed;
-      console.log(this.modalShowed);
+      // console.log(this.modalShowed);
     },
     addCity(data){
      this.cities.push(data.userCity);
@@ -153,7 +157,7 @@ export default {
     }
 
     this.fetchData();
-    console.log(this.modalShowed);
+    // console.log(this.modalShowed);
   },
   created() {
     const showModalWind = localStorage.getItem("showModal");

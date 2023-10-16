@@ -1,6 +1,7 @@
 <template>
-  <div class="wind__content">
-    <ul class="wind__content_list">
+  <div class="wind__content _container">
+    <h3 class="wind _title _detailed">Main info:</h3>
+    <ul class="wind__content _list">
       <li><p>Wind speed:</p> <p>{{ gustSpeed }}Km/h ({{ gustSpeedMeters }}m/s)</p></li>
       <li><p>Gust speed:</p> <p>{{ currentWindSpeed }}Km/h ({{ windSpeedMeters }}m/s)</p></li>
       <li><p>Air humidity:</p> <p>{{ humidity }}%</p></li>

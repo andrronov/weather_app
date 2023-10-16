@@ -8,7 +8,7 @@ export async function fetchCurrentWeatherDataCelsius(API_key, enteredCity, lang)
   
   const data = await response.json();
   const dataCurrent = data.current;
-  console.log(dataCurrent);
+  // console.log(dataCurrent);
   return {
     currentTemp: dataCurrent.temp_c,
     feelsLike: dataCurrent.feelslike_c,
