@@ -249,11 +249,13 @@ input{
       overflow-x: scrol;
       overflow-y: hidden;
       max-width: 650px;
+      height: 85%;
    }
    .columns__content {
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
    }
    .data{
    }
@@ -262,7 +264,7 @@ input{
       flex-direction: column;
       justify-content: flex-end;
       position: relative;
-      height: 90px;
+      height: 90%;
       border: 1px solid white;
       background-color: grey;
       width: 10px;

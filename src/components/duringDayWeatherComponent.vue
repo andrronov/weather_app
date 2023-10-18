@@ -3,8 +3,9 @@
     <h3 class="duringday _title _detailed">During day</h3>
     <div class="duringday__columns">
       <div v-for="data in timeWeatherArray" :key="data.index" class="columns__content">
+        <p>{{ data.weatherData }}°</p>
         <div class="duringday_column">
-          <div :style='`height: ${height}px`' class="column_fill"></div>
+          <div :style='`height: ${data.weatherData*10}%`' class="column_fill"></div>
         </div>
         <p class="duringday_text">{{ data.timeData }}</p>
       </div>
@@ -19,7 +20,7 @@ export default {
   data(){
     return{
       timeWeatherArray: [],
-      allWeather: [],
+      heihtGraph: [],
       // timeData: '',
       // weatherData: 0,
       height: [],
@@ -48,25 +49,26 @@ export default {
             const weatherData = duringDayData[key].temp_c;
             this.timeWeatherArray.push({timeData, weatherData});
 
-            this.allWeather.push(weatherData);
+            this.heihtGraph.push(weatherData);
+            
         }
-        const columnMax = Math.max(...this.allWeather);
-        this.allWeather.forEach((el) => {
-          this.height.push(((el * 100)/columnMax).toFixed(1));
-        } )
-        console.log(...this.height);
-        // const columnHeight = (7.5 * 100)/columnMax;
-
       } catch (error){
         console.error(error);
       }
+    },
+    normalizeBar(){
+      const columnMax = Math.max(...this.heihtGraph);
+        this.heihtGraph.forEach((el) => {
+          this.timeWeatherArray.push(((el * 100)/columnMax).toFixed(1));
+        } )
+        console.log(...this.heihtGraph);
     }
   },
   mounted(){
     setTimeout(() => {
       this.fetchDuringDayData();
+      this.normalizeBar();
     }, 100);
-
     // this.fetchDuringDayData();
   }
 }

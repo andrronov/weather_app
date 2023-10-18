@@ -9,7 +9,7 @@ export async function fetchDuringDay(API_key, enteredCity, lang) {
    const data = await response.json();
    // console.log(data);
    const dataCurrent = data.forecast.forecastday[0];
-   console.log(dataCurrent.hour);
+  //  console.log(dataCurrent.hour);
    // return {
    //    timeWeather: dataCurrent.hour[0],
    // }
