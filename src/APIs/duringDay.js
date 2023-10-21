@@ -17,6 +17,6 @@ export async function fetchDuringDay(API_key, enteredCity, lang) {
   dataCurrent.hour.forEach((hourData, index) => {
     timeWeatherData[`timeWeather${index + 1}`] = hourData;
   });
-
+  // console.log(timeWeatherData);
   return timeWeatherData;
  }

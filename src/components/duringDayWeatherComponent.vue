@@ -3,14 +3,15 @@
     <h3 class="duringday _title _detailed">During day</h3>
     <div class="duringday__columns">
       <div v-for="data in timeWeatherArray" :key="data.index" class="columns__content">
-        <p>{{ data.weatherData }}°</p>
         <div class="duringday_column">
-          <div :style='`height: ${data.weatherData*10}%`' class="column_fill"></div>
+          <div :style='`height: ${data.weatherData * 10}%`' class="column_fill"></div>
         </div>
+        <p class="column_p">{{ data.weatherData }}°</p>
         <p class="duringday_text">{{ data.timeData }}</p>
       </div>
     </div>
   </div>
+  <!-- <div class="duringday__columns" v-for="a in aaa()" :key="a.index">a</div> -->
   <!-- <p v-for="time in timeWeatherArray" :key="time">{{time.timeData}}{{time.weatherData}}</p> -->
 </template>
 
@@ -23,7 +24,8 @@ export default {
       heihtGraph: [],
       // timeData: '',
       // weatherData: 0,
-      height: [],
+      heightArray: [],
+      timeArray: [],
     }
   },
   props: {
@@ -44,30 +46,52 @@ export default {
         const currentLanguage = this.currentLanguage;
 
         const duringDayData = await fetchDuringDay( API_key, enteredCity, currentLanguage );
+        // console.log(duringDayData.timeWeather1);
         for (const key in duringDayData) {
             const timeData = duringDayData[key].time.slice(10);
             const weatherData = duringDayData[key].temp_c;
-            this.timeWeatherArray.push({timeData, weatherData});
+            this.timeWeatherArray.push({ timeData, weatherData });
 
-            this.heihtGraph.push(weatherData);
+            this.heihtGraph.push( weatherData );
+            this.timeArray.push( timeData );
             
         }
+        this.normalizeBar();
+        // console.log(Math.max(...this.heihtGraph));
+
       } catch (error){
         console.error(error);
       }
     },
+    
     normalizeBar(){
+      //   const normalized = this.heihtGraph.map((el) => {
+      //   return {
+      //     height: 5 + ((el - columnMin) * 95) / (columnMax - columnMin),
+      //     timeData: this.timeArray,
+      //   };
+      // });
+
+      // return normalized;
+
       const columnMax = Math.max(...this.heihtGraph);
+        const columnMin = Math.min(...this.heihtGraph);
         this.heihtGraph.forEach((el) => {
-          this.timeWeatherArray.push(((el * 100)/columnMax).toFixed(1));
-        } )
-        console.log(...this.heihtGraph);
+          // this.height.push(((el * 100)/columnMax).toFixed(1));
+          let heightCol = (5 + ((el - columnMin) * 95) / (columnMax - columnMin));
+          this.heightArray.push( {heightCol} );
+        } );
+
+        
+        // this.timeWeatherArray.forEach((el) => {
+          // this.timeWeatherArray.push({height: this.heightArray});
+        // })
     }
   },
   mounted(){
     setTimeout(() => {
       this.fetchDuringDayData();
-      this.normalizeBar();
+      // this.normalizeBar();
     }, 100);
     // this.fetchDuringDayData();
   }
