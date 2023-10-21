@@ -251,6 +251,20 @@ input{
       max-width: 650px;
       height: 85%;
    }
+   .duringday__columns::-webkit-scrollbar{
+      width: 2.5px;
+      border-radius: 10px;
+      border: 1px solid white;
+   }
+   .duringday__columns::-webkit-scrollbar-track {
+  background: rgba(0, 0, 177, 0.353);
+}
+
+.duringday__columns::-webkit-scrollbar-thumb {
+  background-color: darkblue;
+  border-radius: 10px;
+  border: 3px solid rgb(167, 167, 167);
+}
    .columns__content {
       display: flex;
       flex-direction: column;
