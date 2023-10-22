@@ -2,12 +2,10 @@
   <header :id="isDay">
     <div class="header_container">
       <div class="header">
-        <p>Good afternoon, <span class="marked">{{ userName }}</span>!</p>
-        <div class="header__cities_list">
-          <li v-for="city in cities" :key="city.id" class="marked">{{ city }}</li>
-        </div>
+        <p>Hello, <span class="marked">{{ userName }}</span>!</p>
         <div class="header__addcity">
           <button @click="openNewCityModal" class="header__button">Add new city</button>
+          <button @click="openAllCitiesModal" class="header__button">My cities</button>
         </div>
       </div>
     </div>
@@ -42,12 +40,17 @@ props: {
 data(){
   return{
     modalShowed: false,
+    allCitiesModalShowed: false,
   }
 },
 methods: {
   openNewCityModal(){
     this.modalShowed = true;
     this.$emit("openCityModal", {modalShowed: this.modalShowed})
+  },
+  openAllCitiesModal(){
+    this.allCitiesModalShowed = true;
+    this.$emit("openAllCitiesModal", {allCitiesModalShowed: this.allCitiesModalShowed})
   }
 }
 }
@@ -94,6 +97,11 @@ methods: {
   height: 35px;
   z-index: 80;
   color: rgb(44, 44, 44);
+}
+.header__addcity{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 .header__cities_list{
   min-width: 20%;

@@ -56,7 +56,7 @@ body{
    // background-image: linear-gradient(to bottom, #87ceeb, #ffffff); /* градиент от голубого к белому */
    // background-repeat: no-repeat; /* запрет повторения фона */
    // background-attachment: fixed; /* фон зафиксирован на месте при прокрутке */
-   background: repeat center/100% url("../images/background/background-day.jpg");
+   background: repeat center/100% url("../images/background/background.jpg");
    ._window{}
    .currentWeatherWindow{
       .city__title{}
@@ -189,7 +189,7 @@ header{
    flex-direction: column;
    min-height: 150px;
    justify-content: space-between;
-   p{
+   .content_title{
       font-size: 2.35rem;
       background-color: white;
       color: rgb(52, 89, 126);
@@ -248,7 +248,7 @@ input{
       position: relative;
       overflow-x: scrol;
       overflow-y: hidden;
-      max-width: 650px;
+      max-width: 680px;
       height: 85%;
    }
    .duringday__columns::-webkit-scrollbar{
@@ -258,6 +258,7 @@ input{
    }
    .duringday__columns::-webkit-scrollbar-track {
   background: rgba(0, 0, 177, 0.353);
+  border-radius: 10px;
 }
 
 .duringday__columns::-webkit-scrollbar-thumb {
@@ -306,4 +307,116 @@ input{
 }
 #day{
    .column_fill{}
+}
+
+
+
+.duringweek__content {
+}
+.duringweek {
+}
+.duringweek__rows{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   height: 85%;
+}
+.rows__content {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: rgba(0, 0, 23, 0.405);
+   border: 3px solid rgba(161, 161, 161, 0.656);
+   flex-direction: row;
+   height: 30%;
+   margin: 0px 5%;
+   padding: 0px 1%;
+   .row_columns{
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: space-between;
+      height: 75%;
+   }
+   .row_title{
+      font-size: 1.75rem;
+   }
+   .row_info{
+      font-size: 1.15rem;
+      display: flex;
+      gap: 10px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: end;
+      flex-wrap: nowrap;
+   }
+}
+
+
+
+
+
+// ADAPTIVE
+@media (max-width: 1324.9px) {
+   .weather__windows_grid{
+      padding: 25px 1.5%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: scroll;
+      overflow-x: hidden;
+   }
+   ._window{
+      min-height: 40%;
+   }
+   ._bigHeight{
+      min-height: 70%;
+   }
+}
+
+@media (max-width: 695px) {
+   .duringday__content{
+      .duringday__columns{
+         max-width: 575px;
+      }
+   }
+   .row_title{
+      width: 30%;
+   }
+   ._smallScreens{
+      display: none;
+   }
+}
+@media (max-width: 560px) {
+   .duringday__content{
+      .duringday__columns{
+         max-width: 350px;
+      }
+   }
+   ._bigHeight{
+      min-height: 85%;
+   }
+   .rows__content p{
+      font-size: 0.75rem;
+   }
+   .rows__content{
+      margin: 0px 1%;
+      padding: 0px 0.1%;
+      gap: 5px;
+   }
+   ._font{
+      font-size: 1.35rem;
+   }
+   ._container ._list li{
+      width: 90%;
+   }
+}
+@media (max-width: 380px) {
+   .duringday__content{
+      .duringday__columns{
+         max-width: 220px;
+      }
+   }
+   ._bigHeight{
+      min-height: 95%;
+   }
 }

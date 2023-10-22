@@ -2,7 +2,7 @@
    <div class="modalWrap">
       <div class="wrapper">
          <label for="newCity" class="form__content">
-            <p>Write city:</p>
+            <p class="content_title">Write city:</p>
             <input @keydown.enter="confirm" v-model="userCity" type="text">
             <div class="form__content_buttons">
                <button class=" form__button _confirm" @click="confirm">Confirm</button>
@@ -29,7 +29,6 @@ data(){
             userCity: this.userCity,
             showCityModal: this.showCityModal,
          });
-         // ЕЩЕ НЕ ОТПРАВИЛ ЭМИТЫ РОДИТЕЛЮ!!!
       },
       closeModal(){
          this.$emit("closeModal", {showCityModal: false});

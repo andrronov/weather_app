@@ -2,7 +2,8 @@
   <div class="idd">
    <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue> 
    <new-city-modal @new-city-data="addCity" @close-modal="modalShowed = false" v-if="modalShowed"></new-city-modal>
-   <headerComponent @open-city-modal="openCityModal" :isDay="isDay" :userName="userName" :city="city" :cities="cities"></headerComponent> 
+   <all-cities-modal @close-all-cities-modal="allCitiesModalShowed = false" :cities="cities" v-if="allCitiesModalShowed"></all-cities-modal>
+   <headerComponent @open-all-cities-modal="openAllCities" @open-city-modal="openCityModal" :isDay="isDay" :userName="userName" :city="city" :cities="cities"></headerComponent> 
    <div :id="isDay" class="weather__windows_grid">
         <div class="currentWeatherWindow _window _wind_backgrounded">
             <currentWeatherComponentVue
@@ -39,8 +40,8 @@
           >
           </astronomyComponent>
         </div>
-        <div class="nextWeather _window _wind_backgrounded">
-          <nextDaysComponent></nextDaysComponent>
+        <div class="nextWeather _window _bigHeight _wind_backgrounded">
+          <nextDaysComponent :city="city" :currentLanguage="currentLanguage"></nextDaysComponent>
         </div>
     </div>
     </div>
@@ -51,12 +52,13 @@
 import currentWeatherComponentVue from "@/components/currentWeatherComponent.vue";
 import duringDayWeatherComponentVue from '@/components/duringDayWeatherComponent.vue';
 import astronomyComponent from '@/components/astronomyComponent.vue';
-import nextDaysComponent from '@/components/nextDaysComponent.vue';
+import nextDaysComponent from '@/components/duringWeekComponent.vue';
 import windComponent from "@/components/windComponent.vue";
 import { fetchCurrentWeatherDataCelsius } from "../APIs/currentWeatherCelsiusApi";
 import welcomeModalVue from "../components/modals/welcomeModal.vue";
 import headerComponent from "@/components/dom/headerComponent.vue";
 import newCityModal from "@/components/modals/newCityModal.vue";
+import allCitiesModal from "@/components/modals/allCitiesModal.vue";
 
 export default {
   name: "firstCityComponent",
@@ -69,11 +71,13 @@ export default {
     welcomeModalVue,
     headerComponent,
     newCityModal,
+    allCitiesModal,
   },
   data() {
     return {
       showModal: true,
       modalShowed: false,
+      allCitiesModalShowed: false,
 
       userName: "",
       city: "",
@@ -137,6 +141,9 @@ export default {
     openCityModal(data){
       this.modalShowed = data.modalShowed;
       // console.log(this.modalShowed);
+    },
+    openAllCities(data){
+      this.allCitiesModalShowed = data.allCitiesModalShowed;
     },
     addCity(data){
      this.cities.push(data.userCity);
