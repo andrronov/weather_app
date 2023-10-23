@@ -7,6 +7,7 @@
             <div class="form__content_buttons">
                <button class=" form__button _confirm" @click="confirm">Confirm</button>
                <button class="form__button" @click="closeModal">Close</button>
+               <button @click="autocompleteSearch">aaa</button>
             </div>
          </label>
       </div>
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+import { fetchAutocompleteSearch } from '@/APIs/autocomplete';
 export default {
 name: "newCityModal",
 
@@ -33,7 +35,24 @@ data(){
       closeModal(){
          this.$emit("closeModal", {showCityModal: false});
       },
+      async autocompleteSearch(){
+         try{
+            const API_key = "7aecaa5e837b4dd09c3155109232609";
+            const enteredCity = "Mosc";
+            const currentLanguage = "us";
+
+            const answer = await fetchAutocompleteSearch(API_key, enteredCity, currentLanguage);
+            console.log("aaaa", answer);
+         } catch(error){
+            console.error(error);
+         }
+      }
    },
+   // mounted(){
+   //    setTimeout(() => {
+   //       this.autocompleteSearch();
+   //    }, 100)
+   // }
 }
 </script>
 

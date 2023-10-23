@@ -4,7 +4,7 @@
       <div class="header">
         <p>Hello, <span class="marked">{{ userName }}</span>!</p>
         <div class="header__addcity">
-          <button @click="openNewCityModal" class="header__button">Add new city</button>
+          <!-- <button @click="openNewCityModal" class="header__button">Add new city</button> -->
           <button @click="openAllCitiesModal" class="header__button">My cities</button>
         </div>
       </div>
