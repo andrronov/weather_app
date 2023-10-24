@@ -1,7 +1,7 @@
 <template>
   <div class="idd">
    <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue> 
-   <new-city-modal @new-city-data="addCity" @close-modal="modalShowed = false" v-if="modalShowed"></new-city-modal>
+   <!-- <new-city-modal @new-city-data="addCity" @close-modal="modalShowed = false" v-if="modalShowed"></new-city-modal> -->
    <all-cities-modal @close-all-cities-modal="allCitiesModalShowed = false" :cities="cities" v-if="allCitiesModalShowed"></all-cities-modal>
    <headerComponent @open-all-cities-modal="openAllCities" @open-city-modal="openCityModal" :isDay="isDay" :userName="userName" :city="city" :cities="cities"></headerComponent> 
    <div :id="isDay" class="weather__windows_grid">
@@ -57,7 +57,6 @@ import windComponent from "@/components/windComponent.vue";
 import { fetchCurrentWeatherDataCelsius } from "../APIs/currentWeatherCelsiusApi";
 import welcomeModalVue from "../components/modals/welcomeModal.vue";
 import headerComponent from "@/components/dom/headerComponent.vue";
-import newCityModal from "@/components/modals/newCityModal.vue";
 import allCitiesModal from "@/components/modals/allCitiesModal.vue";
 
 export default {
@@ -70,14 +69,13 @@ export default {
     nextDaysComponent,
     welcomeModalVue,
     headerComponent,
-    newCityModal,
     allCitiesModal,
   },
   data() {
     return {
       showModal: true,
       modalShowed: false,
-      allCitiesModalShowed: false,
+      allCitiesModalShowed: true,
 
       userName: "",
       city: "",

@@ -217,6 +217,16 @@ header{
          background-color: rgb(212, 212, 212);
       }
    }
+   .newCity_search{
+            background-color: red;
+      height: 100px;
+      overflow-y: scroll;
+   }
+   .search_result {
+
+   }
+   .result_result {
+   }
 }
 @media (min-width: 769px) {
    .form__content{
