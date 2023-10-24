@@ -7,17 +7,23 @@
                <li class="city" v-for="city in cities" :key="city.index">{{ city }}</li>
             </ul>
             <div class="form__content_buttons">
-               <button @click="showNewCityWindow = !showNewCityWindow" class="form__button">Add new city</button>
+               <button @click="showNewCityWindow = !showNewCityWindow" class="form__button _confirm">Add new city</button>
                <button @click="close" class="form__button">Close</button>
             </div>
          </div>
          <label v-if="showNewCityWindow" for="newCity" class="form__content">
             <p class="content_title">Write city:</p>
-            <input @keydown.enter="confirm" v-model="userCity" type="text">
+            <div class="search_element">
+               <input id="newCity" @keydown.enter="confirm" v-model="userCity" type="text">
+               <div v-if="userCity.length > 2" class="search_results">
+                  <div class="results_container" v-for="(city, index) in allCitiesArray" :key="index">
+                     <p class="container_cities">{{ city.searchCity }}, {{ city.searchRegion }}, {{ city.searchCountry }}</p>
+                  </div>
+               </div>
+            </div>
             <div class="form__content_buttons">
                <button class=" form__button _confirm" @click="confirm">Confirm</button>
                <button class="form__button" @click="showNewCityWindow = false">Close</button>
-               <button @click="autocompleteSearch">aaa</button>
             </div>
          </label>
       </div>
@@ -38,6 +44,7 @@ data(){
    return{
       userCity: "",
       showNewCityWindow: false,
+      allCitiesArray: [],
    }
    },
    methods: {
@@ -47,16 +54,37 @@ data(){
       async autocompleteSearch(){
          try{
             const API_key = "7aecaa5e837b4dd09c3155109232609";
-            const enteredCity = "Mosc";
+            const enteredCity = this.userCity;
             const currentLanguage = "us";
 
             const answer = await fetchAutocompleteSearch(API_key, enteredCity, currentLanguage);
-            console.log("aaaa", answer);
+            const searchHelp = answer.data;
+            this.allCitiesArray = [];
+            for (let idx in searchHelp){
+               const searchCity = searchHelp[idx].name;
+               const searchRegion = searchHelp[idx].region;
+               const searchCountry = searchHelp[idx].country;
+               const searchID = searchHelp[idx].id;
+               
+               this.allCitiesArray.push({ searchCity, searchRegion, searchCountry, searchID });
+            }
          } catch(error){
             console.error(error);
          }
       },
    },
+   watch: {
+      userCity(){
+         if(this.userCity.length > 2){
+            console.log("autocomplete")
+            this.autocompleteSearch();
+         }
+         // if(newValue.length < oldValue.length){
+         //    this.allCitiesArray = [];
+         //    console.log("array cleared");
+         // }
+      },
+   }
 }
 </script>
 
