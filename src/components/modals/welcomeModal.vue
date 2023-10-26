@@ -1,10 +1,12 @@
 <template>
    <div class="modalWrap">
       <div class="wrapper">
-         <h1>Hello!</h1>
-         <input v-model="userName" type="text">Write your name:
-         <input @keydown.enter="confirm" v-model="userCity" type="text">Write city:
-         <button @click="confirm">Confirm</button>
+         <div class="wrapper_content">
+            <h1 class="wrapper_hello content_title">Hello!</h1>
+            <p class="wrapper_name _smaller">Write your name:</p>
+            <input class="wrapper_input" v-model="userName" type="text">
+            <button class="wrapper_button _confirm" @click="confirm">Confirm</button>
+         </div>
       </div>
   </div>
 </template>
@@ -16,17 +18,15 @@ name: "welcomeModalVue",
 data(){
    return{
       userName: "",
-      userCity: "",
       showModal: true,
    }
    },
    methods: {
       confirm(){
-         this.showModal = false;
          this.$emit("dataConfirmed", {
             userName: this.userName,
-            userCity: this.userCity,
-            showModal: this.showModal,
+            showModal: false,
+            showNewCity: true,
          });
       }
    },
@@ -36,13 +36,28 @@ data(){
 
 <style lang="scss" scoped>
 .modalWrap{
-   overflow: hidden;
-   z-index: 99;
    height: 100%;
    width: 100%;
    position: absolute;
    background: fixed;
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
    background-color: rgb(52, 89, 126);
+   z-index: 90;
+}
+.content_title{
+   font-size: 2.05rem;
+   background-color: white;
+   color: rgb(52, 89, 126);
+   padding: 3.5px;
+   border-radius: 5px;
+   text-align: center;
+}
+._smaller{
+   font-size: 1.45rem;
 }
 .wrapper{
    position: relative;
@@ -50,5 +65,40 @@ data(){
    align-items: center;
    flex-direction: column;
    justify-content: center;
+   width: 100%;
 }
+.wrapper_content{
+   scale: 1.1;
+   display: flex;
+   flex-direction: column;
+   min-height: 200px;
+   justify-content: space-between;
+}
+.wrapper_name{
+   color: white;
+   text-align: center;
+}
+
+._confirm{
+   background: white;
+   color: rgb(52, 89, 126);
+}
+._confirm:hover{
+   background-color: rgb(212, 212, 212);
+}
+.wrapper_button{
+   
+   align-self: center;
+   padding: 5px;
+}
+.wrapper_input{
+   max-width: 540px;
+   align-self: center;
+}
+
+@media (min-width: 769px) {
+   .wrapper_content{
+      scale: 1.5;
+   }
+}  
 </style>

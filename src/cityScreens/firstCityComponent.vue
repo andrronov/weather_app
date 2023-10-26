@@ -1,8 +1,8 @@
 <template>
   <div class="idd">
    <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue>
-   <all-cities-modal @close-all-cities-modal="allCitiesModalShowed = false" :cities="cities" v-if="allCitiesModalShowed"></all-cities-modal>
-   <headerComponent @open-all-cities-modal="openAllCities" @open-city-modal="openCityModal" :isDay="isDay" :userName="userName" :city="city" :cities="cities"></headerComponent> 
+   <all-cities-modal @add-new-city="addNewCity" @close-all-cities-modal="allCitiesModalShowed = false" @handle-add-new-city="handleAddCity" v-if="allCitiesModalShowed"></all-cities-modal>
+   <headerComponent @open-all-cities-modal="openAllCities" @open-city-modal="openCityModal" :isDay="isDay" :userName="userName"></headerComponent> 
    <div :id="isDay" class="weather__windows_grid">
         <div class="currentWeatherWindow _window _wind_backgrounded">
             <currentWeatherComponentVue
@@ -73,12 +73,9 @@ export default {
   data() {
     return {
       showModal: true,
-      modalShowed: false,
       allCitiesModalShowed: false,
 
       userName: "",
-      city: "",
-      cities: [],
       currentLanguage: "us",
 
       currentTemperature: null,
@@ -123,8 +120,7 @@ export default {
     },
     handleDataConfirmed(data) {
       this.userName = data.userName;
-      this.city = data.userCity;
-      this.cities.push(data.userCity);
+      this.allCitiesModalShowed = true;
       this.showModal = data.showModal;
       localStorage.setItem("showModal", JSON.stringify(this.showModal));
 
@@ -142,11 +138,13 @@ export default {
     openAllCities(data){
       this.allCitiesModalShowed = data.allCitiesModalShowed;
     },
-    addCity(data){
-     this.cities.push(data.userCity);
-     this.modalShowed = data.showCitiModal;
-     localStorage.setItem("citiesArray", JSON.stringify(this.cities));
-    //  console.log(this.cities); 
+    addNewCity(city){
+      let newCityName = city.newCityName, newCityCountry = city.newCityCountry, newCityId = city.newCityId;
+      this.cities.push({ newCityName, newCityCountry, newCityId })
+    },
+    handleAddCity(cityData){
+      let newCityName = cityData.newCityName, newCityCountry = cityData.newCityCountry, newCityId = cityData.newCityId;
+      this.cities.push({ newCityName, newCityCountry, newCityId })
     }
   },
   mounted() {

@@ -187,7 +187,6 @@ header{
    scale: 1.1;
    display: flex;
    flex-direction: column;
-   width: 15%;
    min-height: 200px;
    justify-content: space-between;
    .content_title{
@@ -250,6 +249,10 @@ header{
          margin: 5px;
          padding: 2px;
          cursor: pointer;
+      }
+      p:hover{
+         background-color: rgb(52, 89, 126);
+         color: white;
       }
    }
 }
@@ -360,7 +363,6 @@ input{
    display: flex;
    justify-content: space-between;
    align-items: center;
-   background-color: rgba(0, 0, 23, 0.405);
    border: 3px solid rgba(161, 161, 161, 0.656);
    flex-direction: row;
    height: 30%;
@@ -386,8 +388,18 @@ input{
       flex-wrap: nowrap;
    }
 }
+#night{
+   .rows__content{
+      background-color: rgba(0, 0, 23, 0.405);
+   }
+}
 
-
+.search_error{
+   color: white;
+   background-color: red;
+   padding: 1.5px;
+   margin-top: 5px;
+}
 
 
 

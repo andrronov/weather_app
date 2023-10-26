@@ -1,6 +1,6 @@
 // apiService.js
 export async function fetchDuringWeek(API_key, enteredCity, lang) {
-   const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${API_key}&q=${enteredCity}&days=7&lang=${lang}`);
+   const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${API_key}&q=id:${enteredCity}&days=7&lang=${lang}`);
    
    if (!response.ok) {
      throw new Error('Failed to fetch weather data');

@@ -4,7 +4,7 @@
          <div v-if="!showNewCityWindow" class="form__content">
             <p class="content_title">Choose a city:</p>
             <ul class="content_cities">
-               <li class="city" v-for="city in cities" :key="city.index">{{ city }}</li>
+               <li class="city" v-for="(city, index) in cities" :key="index" @click="aaa(aaa)">{{ city.newCityName }}</li>
             </ul>
             <div class="form__content_buttons">
                <button @click="showNewCityWindow = !showNewCityWindow" class="form__button _confirm">Add new city</button>
@@ -14,15 +14,16 @@
          <label v-if="showNewCityWindow" for="newCity" class="form__content">
             <p class="content_title">Write city:</p>
             <div class="search_element">
-               <input id="newCity" @keydown.enter="confirm" v-model="userCity" type="text">
+               <input id="newCity" @keydown.enter="handleAddCity" v-model="userCity" type="text">
+               <p class="search_error" v-if="searchError">Error! This city doesn't exist.</p>
                <div v-if="userCity.length > 2" class="search_results">
                   <div class="results_container" v-for="(city, index) in allCitiesArray" :key="index">
-                     <p class="container_cities">{{ city.searchCity }}, {{ city.searchRegion }}, {{ city.searchCountry }}</p>
+                     <p @click="addCity(city)" class="container_cities">{{ city.searchCity }}, {{ city.searchRegion }}, {{ city.searchCountry }}</p>
                   </div>
                </div>
             </div>
             <div class="form__content_buttons">
-               <button class=" form__button _confirm" @click="confirm">Confirm</button>
+               <button class=" form__button _confirm" @click="handleAddCity">Confirm</button>
                <button class="form__button" @click="showNewCityWindow = false">Close</button>
             </div>
          </label>
@@ -34,17 +35,13 @@
 import { fetchAutocompleteSearch } from '@/APIs/autocomplete';
 export default {
 name: "allCitiesModal",
-props: {
-   cities: {
-      type: Array,
-      require: true,
-   }
-},
 data(){
    return{
       userCity: "",
       showNewCityWindow: false,
       allCitiesArray: [],
+      cities: [],
+      searchError: false,
    }
    },
    methods: {
@@ -72,19 +69,50 @@ data(){
             console.error(error);
          }
       },
+      addCity(city){
+         this.cities.push( {
+            newCityName: city.searchCity,
+            newCityCountry: city.searchCountry,
+            newCityId: city.searchID, 
+         });
+         this.showNewCityWindow = false;
+         this.userCity = "";
+      },
+      async handleAddCity(){
+         try{
+            const API_key = "7aecaa5e837b4dd09c3155109232609";
+            const enteredCity = this.userCity;
+            const currentLanguage = "us";
+
+            const answer = await fetchAutocompleteSearch(API_key, enteredCity, currentLanguage);
+            const cityAnswer = answer.data[0];
+            // console.log(cityAnswer);
+            if(cityAnswer === undefined){
+               this.searchError = true;
+            } else{
+            this.cities.push( {
+            newCityName: cityAnswer.name,
+            newCityCountry: cityAnswer.country,
+            newCityId: cityAnswer.id,
+         });
+         this.showNewCityWindow = false;
+      }
+         } catch(error){
+            console.error(error);
+         }
+
+         this.userCity = "";
+      },
    },
    watch: {
       userCity(){
          if(this.userCity.length > 2){
             console.log("autocomplete")
             this.autocompleteSearch();
+            this.searchError = false
          }
-         // if(newValue.length < oldValue.length){
-         //    this.allCitiesArray = [];
-         //    console.log("array cleared");
-         // }
       },
-   }
+   },
 }
 </script>
 
@@ -98,6 +126,13 @@ data(){
    overflow: hidden;
    background-color: rgb(52, 89, 126);
    z-index: 90;
+}
+.search_element{
+
+}
+#newCity{
+}
+.search_results{
 }
 .wrapper{
    position: relative;

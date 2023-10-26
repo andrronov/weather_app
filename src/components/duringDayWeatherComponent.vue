@@ -2,9 +2,9 @@
   <div class="duringday__content _container">
     <h3 class="duringday _title _detailed">During day</h3>
     <div class="duringday__columns">
-      <div v-for="data in timeWeatherArray" :key="data.index" class="columns__content">
+      <div v-for="(data, index) in timeWeatherArray" :key="index" class="columns__content">
         <div class="duringday_column">
-          <div :style='`height: ${data.weatherData * 10}%`' class="column_fill"></div>
+          <div :style='`height: ${heightArray[index].heightCol}%`' class="column_fill"></div>
         </div>
         <p class="column_p">{{ data.weatherData }}°</p>
         <p class="duringday_text">{{ data.timeData }}</p>
@@ -49,7 +49,8 @@ export default {
         // console.log(duringDayData.timeWeather1);
         for (const key in duringDayData) {
             const timeData = duringDayData[key].time.slice(10);
-            const weatherData = duringDayData[key].temp_c;
+            const weatherData = duringDayData[key].temp_c
+            // если что округляй числа toFixed(0);
             this.timeWeatherArray.push({ timeData, weatherData });
 
             this.heihtGraph.push( weatherData );
@@ -65,15 +66,6 @@ export default {
     },
     
     normalizeBar(){
-      //   const normalized = this.heihtGraph.map((el) => {
-      //   return {
-      //     height: 5 + ((el - columnMin) * 95) / (columnMax - columnMin),
-      //     timeData: this.timeArray,
-      //   };
-      // });
-
-      // return normalized;
-
       const columnMax = Math.max(...this.heihtGraph);
         const columnMin = Math.min(...this.heihtGraph);
         this.heihtGraph.forEach((el) => {
@@ -81,11 +73,6 @@ export default {
           let heightCol = (5 + ((el - columnMin) * 95) / (columnMax - columnMin));
           this.heightArray.push( {heightCol} );
         } );
-
-        
-        // this.timeWeatherArray.forEach((el) => {
-          // this.timeWeatherArray.push({height: this.heightArray});
-        // })
     }
   },
   mounted(){

@@ -1,6 +1,6 @@
 // apiService.js
 export async function fetchCurrentWeatherDataCelsius(API_key, enteredCity, lang) {
-  const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${API_key}&q=${enteredCity}&lang=${lang}`);
+  const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${API_key}&q=id:${enteredCity}&lang=${lang}`);
   
   if (!response.ok) {
     throw new Error('Failed to fetch weather data');
