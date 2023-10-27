@@ -16,6 +16,7 @@
             <div class="search_element">
                <input id="newCity" @keydown.enter="handleAddCity" v-model="userCity" type="text">
                <p class="search_error" v-if="searchError">Error! This city doesn't exist.</p>
+               <p class="search_error" v-if="addError">Error! This city has already added.</p>
                <div v-if="userCity.length > 2" class="search_results">
                   <div class="results_container" v-for="(city, index) in allCitiesArray" :key="index">
                      <p @click="addCity(city)" class="container_cities">{{ city.searchCity }}, {{ city.searchRegion }}, {{ city.searchCountry }}</p>
@@ -42,6 +43,7 @@ data(){
       allCitiesArray: [],
       cities: [],
       searchError: false,
+      addError: false,
    }
    },
    methods: {
@@ -70,13 +72,26 @@ data(){
          }
       },
       addCity(city){
-         this.cities.push( {
+         let isCityAlreadyExists = false;
+               for (let i = 0; i < this.cities.length; i++) {
+               if (city.searchID == this.cities[i].newCityId) {
+                  isCityAlreadyExists = true;
+                  break;
+               }
+            }
+         if(isCityAlreadyExists){
+            this.addError = true;
+            this.userCity = "";
+            this.allCitiesArray = [];
+         } else {
+            this.cities.push({
             newCityName: city.searchCity,
             newCityCountry: city.searchCountry,
             newCityId: city.searchID, 
          });
          this.showNewCityWindow = false;
          this.userCity = "";
+         }
       },
       async handleAddCity(){
          try{
@@ -86,18 +101,33 @@ data(){
 
             const answer = await fetchAutocompleteSearch(API_key, enteredCity, currentLanguage);
             const cityAnswer = answer.data[0];
+            let isCityAlreadyExists = false;
+               for (let i = 0; i < this.cities.length; i++) {
+               if (cityAnswer.id == this.cities[i].newCityId) {
+                  isCityAlreadyExists = true;
+                  console.log(isCityAlreadyExists);
+                  break;
+               }
+            }
             // console.log(cityAnswer);
             if(cityAnswer === undefined){
                this.searchError = true;
             } else{
-            this.cities.push( {
-            newCityName: cityAnswer.name,
-            newCityCountry: cityAnswer.country,
-            newCityId: cityAnswer.id,
-         });
-         this.showNewCityWindow = false;
-      }
-         } catch(error){
+                  if(isCityAlreadyExists){
+                     this.addError = true;
+                  } else {
+                     this.cities.push( {
+                  newCityName: cityAnswer.name,
+                  newCityCountry: cityAnswer.country,
+                  newCityId: cityAnswer.id,
+                  });
+                  this.showNewCityWindow = false;
+                  }
+               }
+               
+            
+         }
+          catch(error){
             console.error(error);
          }
 
@@ -109,7 +139,8 @@ data(){
          if(this.userCity.length > 2){
             console.log("autocomplete")
             this.autocompleteSearch();
-            this.searchError = false
+            this.searchError = false;
+            this.addError = false;
          }
       },
    },
