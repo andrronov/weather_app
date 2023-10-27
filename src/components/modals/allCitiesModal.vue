@@ -143,7 +143,20 @@ data(){
             this.addError = false;
          }
       },
+      cities:{
+         handler:function(){
+         localStorage.setItem('citiesData', JSON.stringify(this.cities));
+         console.log('local updated');
+         },
+         deep: true
+      },
    },
+   created(){
+      const citiesData = localStorage.getItem('citiesData');
+      if (citiesData){
+         this.cities = JSON.parse(citiesData);
+      }
+   }
 }
 </script>
 
