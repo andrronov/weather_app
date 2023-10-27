@@ -4,7 +4,7 @@
          <div class="wrapper_content">
             <h1 class="wrapper_hello content_title">Hello!</h1>
             <p class="wrapper_name _smaller">Write your name:</p>
-            <input class="wrapper_input" v-model="userName" type="text">
+            <input @keydown.enter="confirm" class="wrapper_input" v-model="userName" type="text">
             <button class="wrapper_button _confirm" @click="confirm">Confirm</button>
          </div>
       </div>

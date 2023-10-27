@@ -1,12 +1,12 @@
 <template>
   <div class="idd">
    <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue>
-   <all-cities-modal @add-new-city="addNewCity" @close-all-cities-modal="allCitiesModalShowed = false" @handle-add-new-city="handleAddCity" v-if="allCitiesModalShowed"></all-cities-modal>
+   <all-cities-modal @city-to-weather="takeCityData" @close-all-cities-modal="allCitiesModalShowed = false" @handle-add-new-city="handleAddCity" v-if="allCitiesModalShowed"></all-cities-modal>
    <headerComponent @open-all-cities-modal="openAllCities" @open-city-modal="openCityModal" :isDay="isDay" :userName="userName"></headerComponent> 
    <div :id="isDay" class="weather__windows_grid">
         <div class="currentWeatherWindow _window _wind_backgrounded">
             <currentWeatherComponentVue
-              :city="city"
+              :currentCity="currentCity"
               :currentTemperature="currentTemperature"
               :feelsLikeTemp="feelsLikeTemp"
               :conditionText="conditionText"
@@ -75,6 +75,7 @@ export default {
       showModal: true,
       allCitiesModalShowed: false,
 
+      currentCity: "",
       userName: "",
       currentLanguage: "us",
 
@@ -96,10 +97,12 @@ export default {
     async fetchData() {
       try {
         const API_key = "7aecaa5e837b4dd09c3155109232609";
-        const enteredCity = this.city;
+        const enteredCity = this.currentCity;
         const currentLanguage = this.currentLanguage;
 
         const weatherData = await fetchCurrentWeatherDataCelsius( API_key, enteredCity, currentLanguage );
+        console.log(weatherData);
+        console.log('aadsdsads', enteredCity);
         this.currentTemperature = weatherData.currentTemp;
         this.feelsLikeTemp = weatherData.feelsLike;
         this.conditionText = weatherData.tempText;
@@ -138,13 +141,15 @@ export default {
     openAllCities(data){
       this.allCitiesModalShowed = data.allCitiesModalShowed;
     },
-    addNewCity(city){
-      let newCityName = city.newCityName, newCityCountry = city.newCityCountry, newCityId = city.newCityId;
-      this.cities.push({ newCityName, newCityCountry, newCityId })
-    },
     handleAddCity(cityData){
       let newCityName = cityData.newCityName, newCityCountry = cityData.newCityCountry, newCityId = cityData.newCityId;
       this.cities.push({ newCityName, newCityCountry, newCityId })
+    },
+    takeCityData(city){
+      this.currentCity = city.city;
+      this.allCitiesModalShowed = false;
+      this.fetchData();
+      localStorage.currentCity = this.currentCity;
     }
   },
   mounted() {
@@ -157,9 +162,10 @@ export default {
     if(localStorage.cities){
       this.cities = localStorage.cities;
     }
-
+    if(localStorage.currentCity){
+      this.currentCity = localStorage.currentCity;
+    }
     this.fetchData();
-    // console.log(this.modalShowed);
   },
   created() {
     const showModalWind = localStorage.getItem("showModal");
