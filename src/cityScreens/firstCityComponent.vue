@@ -1,11 +1,13 @@
 <template>
   <div class="idd">
    <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue>
-   <all-cities-modal @city-to-weather="takeCityData" @close-all-cities-modal="allCitiesModalShowed = false" @handle-add-new-city="handleAddCity" v-if="allCitiesModalShowed"></all-cities-modal>
+   <all-cities-modal @city-to-weather="takeCityData" @close-all-cities-modal="allCitiesModalShowed = false" v-if="allCitiesModalShowed"></all-cities-modal>
    <headerComponent @open-all-cities-modal="openAllCities" @open-city-modal="openCityModal" :isDay="isDay" :userName="userName"></headerComponent> 
-   <div :id="isDay" class="weather__windows_grid">
+   <div class="choose_city" v-if="currentCity == ''"><p>Choose city from your list</p></div>
+   <div v-if="currentCity !== ''" :id="isDay" class="weather__windows_grid">
         <div class="currentWeatherWindow _window _wind_backgrounded">
             <currentWeatherComponentVue
+              :currentCityName="currentCityName"
               :currentCity="currentCity"
               :currentTemperature="currentTemperature"
               :feelsLikeTemp="feelsLikeTemp"
@@ -17,7 +19,7 @@
         </div>
         <div class="duringDayWeather _window _wind_bordered">
           <duringDayWeatherComponentVue
-          :city="city"
+          :currentCity="currentCity"
           :currentLanguage="currentLanguage"
           >
           </duringDayWeatherComponentVue>
@@ -35,12 +37,18 @@
           </windComponent>
         </div>
         <div class="astroWeather _window _wind_bordered">
-          <astronomyComponent :city="city" :currentLanguage="currentLanguage"
+          <astronomyComponent
+          :currentCity="currentCity"
+          :currentLanguage="currentLanguage"
           >
           </astronomyComponent>
         </div>
         <div class="nextWeather _window _bigHeight _wind_backgrounded">
-          <nextDaysComponent :city="city" :currentLanguage="currentLanguage"></nextDaysComponent>
+          <nextDaysComponent
+          :currentCity="currentCity"
+          :currentLanguage="currentLanguage"
+          >
+        </nextDaysComponent>
         </div>
     </div>
     </div>
@@ -76,6 +84,7 @@ export default {
       allCitiesModalShowed: false,
 
       currentCity: "",
+      currentCityName: "",
       userName: "",
       currentLanguage: "us",
 
@@ -101,8 +110,7 @@ export default {
         const currentLanguage = this.currentLanguage;
 
         const weatherData = await fetchCurrentWeatherDataCelsius( API_key, enteredCity, currentLanguage );
-        console.log(weatherData);
-        console.log('aadsdsads', enteredCity);
+        this.currentCityName = weatherData.currentCityName;
         this.currentTemperature = weatherData.currentTemp;
         this.feelsLikeTemp = weatherData.feelsLike;
         this.conditionText = weatherData.tempText;
@@ -119,7 +127,6 @@ export default {
       } catch (error) {
         console.error(error);
       }
-      // console.log(this.conditionIcon);
     },
     handleDataConfirmed(data) {
       this.userName = data.userName;
@@ -127,40 +134,25 @@ export default {
       this.showModal = data.showModal;
       localStorage.setItem("showModal", JSON.stringify(this.showModal));
 
-      this.fetchData();
-
-      localStorage.username = this.userName;
-      localStorage.city = this.city;
-      // localStorage.cities = this.cities;
-      localStorage.setItem("citiesArray", JSON.stringify(this.cities));
+      localStorage.username = this.userName; 
     },
     openCityModal(data){
       this.modalShowed = data.modalShowed;
-      // console.log(this.modalShowed);
     },
     openAllCities(data){
       this.allCitiesModalShowed = data.allCitiesModalShowed;
     },
-    handleAddCity(cityData){
-      let newCityName = cityData.newCityName, newCityCountry = cityData.newCityCountry, newCityId = cityData.newCityId;
-      this.cities.push({ newCityName, newCityCountry, newCityId })
-    },
     takeCityData(city){
-      this.currentCity = city.city;
+      console.log('xxxxxxxxxx', city);
+      this.currentCity = city;
       this.allCitiesModalShowed = false;
       this.fetchData();
       localStorage.currentCity = this.currentCity;
-    }
+    },
   },
   mounted() {
     if (localStorage.username) {
       this.userName = localStorage.username;
-    }
-    if (localStorage.city) {
-      this.city = localStorage.city;
-    }
-    if(localStorage.cities){
-      this.cities = localStorage.cities;
     }
     if(localStorage.currentCity){
       this.currentCity = localStorage.currentCity;
@@ -169,12 +161,8 @@ export default {
   },
   created() {
     const showModalWind = localStorage.getItem("showModal");
-    const citiesAll = localStorage.getItem("citiesArray");
     if (showModalWind) {
       this.showModal = JSON.parse(showModalWind);
-    }
-    if(citiesAll){
-      this.cities = JSON.parse(citiesAll);
     }
   },
 };

@@ -14,7 +14,7 @@
             </ul>
             <div class="form__content_buttons">
                <button @click="showNewCityWindow = !showNewCityWindow" class="form__button _confirm">Add new city</button>
-               <button @click="close" class="form__button">Close</button>
+               <button v-if="cities.length" @click="close" class="form__button">Close</button>
             </div>
          </div>
          <label v-if="showNewCityWindow" for="newCity" class="form__content">
@@ -50,6 +50,7 @@ data(){
       cities: [],
       searchError: false,
       addError: false,
+      currentCity: '',
    }
    },
    methods: {
@@ -115,7 +116,6 @@ data(){
                   break;
                }
             }
-            // console.log(cityAnswer);
             if(cityAnswer === undefined){
                this.searchError = true;
             } else{
@@ -138,11 +138,9 @@ data(){
       },
       handleDeleteCity(cityToDelete){
          this.cities = this.cities.filter((c) => c != cityToDelete);
-         // console.log(cityToDelete);
       },
       cityToWeather(city){
          this.$emit('cityToWeather', city);
-         // console.log(city);
       },
    },
    watch: {

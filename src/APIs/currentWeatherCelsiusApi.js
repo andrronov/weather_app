@@ -7,20 +7,20 @@ export async function fetchCurrentWeatherDataCelsius(API_key, enteredCity, lang)
   }
   
   const data = await response.json();
-  const dataCurrent = data.current;
   // console.log(dataCurrent);
   return {
-    currentTemp: dataCurrent.temp_c,
-    feelsLike: dataCurrent.feelslike_c,
-    tempText: dataCurrent.condition.text,
-    gustSpeed: dataCurrent.gust_kph,
-    currentHumidity: dataCurrent.humidity,
-    isDay: dataCurrent.is_day,
-    currentDownfall: dataCurrent.precip_mm,
-    currentPressure: dataCurrent.pressure_mb,
-    currentWindDirection: dataCurrent.wind_dir,
-    currentWindSpeed: dataCurrent.wind_kph,
-    conditionIcon: dataCurrent.condition.icon,
-    visibilityKm: dataCurrent.vis_km,
+    currentCityName: data.location.name,
+    currentTemp: data.current.temp_c,
+    feelsLike: data.current.feelslike_c,
+    tempText: data.current.condition.text,
+    gustSpeed: data.current.gust_kph,
+    currentHumidity: data.current.humidity,
+    isDay: data.current.is_day,
+    currentDownfall: data.current.precip_mm,
+    currentPressure: data.current.pressure_mb,
+    currentWindDirection: data.current.wind_dir,
+    currentWindSpeed: data.current.wind_kph,
+    conditionIcon: data.current.condition.icon,
+    visibilityKm: data.current.vis_km,
    };
 }

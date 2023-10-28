@@ -23,10 +23,9 @@ data(){
   }
 },
 props: {
-  city: {
-    type: String,
-    default: "Not found"
-  },
+  currentCity: {
+      type: Number,
+    },
   currentLanguage: {
     type: String,
     default: "us"
@@ -36,7 +35,7 @@ methods:{
   async fetchWeek(){
     try{
       const API_KEY = "7aecaa5e837b4dd09c3155109232609";
-      const enteredCity = this.city;
+      const enteredCity = this.currentCity;
       const lang = this.currentLanguage;
 
       const duringWeekData = await fetchDuringWeek( API_KEY, enteredCity, lang );

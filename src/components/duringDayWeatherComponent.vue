@@ -22,16 +22,12 @@ export default {
     return{
       timeWeatherArray: [],
       heihtGraph: [],
-      // timeData: '',
-      // weatherData: 0,
       heightArray: [],
-      timeArray: [],
     }
   },
   props: {
-    city: {
-      type: String,
-      default: "Not found",
+    currentCity: {
+      type: Number,
     },
     currentLanguage: {
       type: String,
@@ -42,7 +38,7 @@ export default {
     async fetchDuringDayData(){
       try{
         const API_key = "7aecaa5e837b4dd09c3155109232609";
-        const enteredCity = this.city;
+        const enteredCity = this.currentCity;
         const currentLanguage = this.currentLanguage;
 
         const duringDayData = await fetchDuringDay( API_key, enteredCity, currentLanguage );
@@ -54,8 +50,6 @@ export default {
             this.timeWeatherArray.push({ timeData, weatherData });
 
             this.heihtGraph.push( weatherData );
-            this.timeArray.push( timeData );
-            
         }
         this.normalizeBar();
         // console.log(Math.max(...this.heihtGraph));
@@ -78,9 +72,15 @@ export default {
   mounted(){
     setTimeout(() => {
       this.fetchDuringDayData();
-      // this.normalizeBar();
     }, 100);
-    // this.fetchDuringDayData();
+  },
+  watch:{
+    currentCity(){
+      console.log('city changed');
+      setTimeout(() => {
+      this.fetchDuringDayData();
+    }, 100);
+    }
   }
 }
 </script>

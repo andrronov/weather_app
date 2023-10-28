@@ -26,16 +26,15 @@ export default {
       type: String,
       default: "ru",
     },
-    city: {
-      type: String,
-      default: "Not found",
+    currentCity: {
+      type: Number,
     },
   },
   methods:{
     async fetchAstro(){
       try {
         const API_key = "7aecaa5e837b4dd09c3155109232609";
-        const enteredCity = this.city;
+        const enteredCity = this.currentCity;
         const currentLanguage = this.currentLanguage;
 
         const astroData = await fetchAstronomy( API_key, enteredCity, currentLanguage );
