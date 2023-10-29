@@ -42,7 +42,6 @@ export default {
         const currentLanguage = this.currentLanguage;
 
         const duringDayData = await fetchDuringDay( API_key, enteredCity, currentLanguage );
-        // console.log(duringDayData.timeWeather1);
         for (const key in duringDayData) {
             const timeData = duringDayData[key].time.slice(10);
             const weatherData = duringDayData[key].temp_c
@@ -52,8 +51,6 @@ export default {
             this.heihtGraph.push( weatherData );
         }
         this.normalizeBar();
-        // console.log(Math.max(...this.heihtGraph));
-
       } catch (error){
         console.error(error);
       }
@@ -76,10 +73,9 @@ export default {
   },
   watch:{
     currentCity(){
-      console.log('city changed');
-      setTimeout(() => {
+      console.log('city changed', this.currentCity);
       this.fetchDuringDayData();
-    }, 100);
+      this.normalizeBar();
     }
   }
 }

@@ -7,6 +7,7 @@
             <input @keydown.enter="confirm" class="wrapper_input" v-model="userName" type="text">
             <button class="wrapper_button _confirm" @click="confirm">Confirm</button>
          </div>
+         <span class="autor">andrronov, 10.29.23</span>
       </div>
   </div>
 </template>

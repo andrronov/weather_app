@@ -1,9 +1,10 @@
 <template>
-  <div class="idd">
+  <img v-if="isDayImg" src="../images//background/background.jpg" alt="" srcset="">
+  <img v-if="!isDayImg" src="../images//background/background-night.jpg" alt="" srcset="">
    <welcome-modal-vue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcome-modal-vue>
-   <all-cities-modal @city-to-weather="takeCityData" @close-all-cities-modal="allCitiesModalShowed = false" v-if="allCitiesModalShowed"></all-cities-modal>
-   <headerComponent @open-all-cities-modal="openAllCities" @open-city-modal="openCityModal" :isDay="isDay" :userName="userName"></headerComponent> 
-   <div class="choose_city" v-if="currentCity == ''"><p>Choose city from your list</p></div>
+   <all-cities-modal @change-name="changeName" @city-to-weather="takeCityData" @close-all-cities-modal="allCitiesModalShowed = false" v-if="allCitiesModalShowed"></all-cities-modal>
+   <headerComponent @open-all-cities-modal="openAllCities" @open-city-modal="openCityModal" :isDayImg="isDayImg" :isDay="isDay" :userName="userName"></headerComponent> 
+   <div class="choose_city" v-if="currentCity == ''"><p>Select city from your list</p></div>
    <div v-if="currentCity !== ''" :id="isDay" class="weather__windows_grid">
         <div class="currentWeatherWindow _window _wind_backgrounded">
             <currentWeatherComponentVue
@@ -19,6 +20,7 @@
         </div>
         <div class="duringDayWeather _window _wind_bordered">
           <duringDayWeatherComponentVue
+          :key="currentCity"
           :currentCity="currentCity"
           :currentLanguage="currentLanguage"
           >
@@ -38,6 +40,7 @@
         </div>
         <div class="astroWeather _window _wind_bordered">
           <astronomyComponent
+          :key="currentCity"
           :currentCity="currentCity"
           :currentLanguage="currentLanguage"
           >
@@ -45,12 +48,12 @@
         </div>
         <div class="nextWeather _window _bigHeight _wind_backgrounded">
           <nextDaysComponent
+          :key="currentCity"
           :currentCity="currentCity"
           :currentLanguage="currentLanguage"
           >
         </nextDaysComponent>
         </div>
-    </div>
     </div>
   <!-- <h1>Hello, {{ this.userName }}!</h1> -->
 </template>
@@ -94,6 +97,7 @@ export default {
       gustSpeed: null,
       humidity: null,
       isDay: "",
+      isDayImg: false,
       currentDownfall: null,
       currentPressure: null,
       currentWindDirection: "",
@@ -117,6 +121,7 @@ export default {
         this.gustSpeed = weatherData.gustSpeed;
         this.humidity = weatherData.currentHumidity;
         this.isDay = weatherData.isDay;
+        this.isDayImg = this.isDay;
         this.conditionIcon = weatherData.conditionIcon.substring(weatherData.conditionIcon.length - 7);
         this.isDay ? this.isDay = "day" : this.isDay = "night";
         this.currentDownfall = weatherData.currentDownfall;
@@ -149,6 +154,10 @@ export default {
       this.fetchData();
       localStorage.currentCity = this.currentCity;
     },
+    changeName(){
+      this.allCitiesModalShowed = false;
+      this.showModal = true;
+    }
   },
   mounted() {
     if (localStorage.username) {

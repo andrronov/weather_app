@@ -1,6 +1,6 @@
 <template>
    <div class="loading-screen">
-      <h1>Welcome, {{ userName }}!</h1>
+      <h1 v-if="userName">Welcome, {{ userName }}!</h1>
      <div class="spinner"></div>
    </div>
  </template>
@@ -26,6 +26,7 @@
    top: 0;
    left: 0;
    width: 100%;
+   z-index: 95;
    height: 100%;
    background-color: #fff;
    display: flex;
@@ -33,7 +34,6 @@
    flex-direction: column;
    justify-content: center;
    align-items: center;
-   animation: slide 2000ms linear 0s infinite;
  }
  
  .spinner {
@@ -47,14 +47,6 @@
  
  h1{
    font-size: 2rem;
- }
- @keyframes slide {
-   0% {
-      opacity: 1;
-   }
-   100% {
-      opacity: 0;
-   }
  }
  @keyframes spin {
    0% {

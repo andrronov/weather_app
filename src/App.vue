@@ -1,5 +1,7 @@
 <template>
-  <loadingScreen :userName="userName" v-if="!appLoaded"></loadingScreen>
+  <transition>
+    <loadingScreen :userName="userName" v-if="!appLoaded"></loadingScreen>
+  </transition>
   <!-- <welcomeModalVue @dataConfirmed="handleDataConfirmed" v-if="showModal"></welcomeModalVue> -->
   <firstCityComponentVue></firstCityComponentVue>
 </template>
@@ -39,7 +41,7 @@ export default {
     }
     setTimeout(() => {
       this.appLoaded = true;
-    }, 2000);
+    }, 350);
   },
   created() {
     const showModalWind = localStorage.getItem("showModal");
@@ -50,4 +52,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

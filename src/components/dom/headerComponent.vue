@@ -2,21 +2,16 @@
   <header :id="isDay">
     <div class="header_container">
       <div class="header">
+        <div class="header_name">
         <p>Hello, <span class="marked">{{ userName }}</span>!</p>
+        </div>
         <div class="header__addcity">
-          <!-- <button @click="openNewCityModal" class="header__button">Add new city</button> -->
           <button @click="openAllCitiesModal" class="header__button">My cities</button>
         </div>
       </div>
     </div>
   </header>
-  <!-- city list -->
-  <!-- посередине переключалка городов из листа со стрелочками -->
 </template>
-
-<!-- TODO: good morning/evening depends on what time is -->
-<!-- Parsing all cities and show -->
-<!-- пока получил просто город, потом сделать массив -->
 
 <script>
 export default {
@@ -33,6 +28,7 @@ props: {
     type: String,
     default: "day",
   },
+  isDayImg:{},
   cities: {
     type: Array,
   }
@@ -58,7 +54,8 @@ methods: {
 
 <style lang="scss" scoped>
 #day {
-  background-color: rgb(89, 93, 214);
+  background: rgb(242,242,255);
+background: linear-gradient(72deg, rgba(242,242,255,1) 0%, rgba(0,111,195,1) 34%);
   color: rgb(230, 230, 230);
   font-size: 1.2rem;
   button:hover{
@@ -70,6 +67,12 @@ methods: {
     background: none;
   }
 }
+@media (max-width: 500px) {
+  #day{
+    background: rgb(242,242,255);
+background: linear-gradient(72deg, rgba(242,242,255,1) 0%, rgba(0,98,172,1) 66%);
+  }
+}
 #night{
   background-color: black;
   .header__button{
@@ -79,7 +82,7 @@ methods: {
   button:hover{
     border: none;
     color: white;
-    background-color: rgb(89, 93, 214);
+    background-color: rgb(104, 39, 184);
   }
 }
 .header_container{
