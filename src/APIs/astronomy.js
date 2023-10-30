@@ -1,5 +1,5 @@
 export async function fetchAstronomy(API_key, enteredCity, lang) {
-   const response = await fetch(`http://api.weatherapi.com/v1/astronomy.json?key=${API_key}&q=id:${enteredCity}&lang=${lang}`);
+   const response = await fetch(`https://api.weatherapi.com/v1/astronomy.json?key=${API_key}&q=id:${enteredCity}&lang=${lang}`);
    
    if (!response.ok) {
      throw new Error('Failed to fetch weather data');
