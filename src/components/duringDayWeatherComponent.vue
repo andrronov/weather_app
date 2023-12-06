@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { fetchDuringDay } from '@/APIs/duringDay';
+import { fetchDuringDay } from '../APIs/weatherApi.js';
 export default {
   data(){
     return{
@@ -67,9 +67,7 @@ export default {
     }
   },
   mounted(){
-    setTimeout(() => {
       this.fetchDuringDayData();
-    }, 100);
   },
   watch:{
     currentCity(){

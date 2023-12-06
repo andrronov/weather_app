@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { fetchAutocompleteSearch } from '@/APIs/autocomplete';
+import { fetchAutocompleteSearch } from '../../APIs/weatherApi.js';
 export default {
 name: "allCitiesModal",
 data(){

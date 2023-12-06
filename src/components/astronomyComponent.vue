@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import { fetchAstronomy } from "@/APIs/astronomy.js";
+import {fetchAstronomy} from '../APIs/weatherApi.js'
+
 export default {
   data(){
     return{
@@ -48,9 +49,7 @@ export default {
     }
   },
   mounted(){
-    setTimeout(() => {
       this.fetchAstro();
-    }, 10);
   },
 }
 </script>

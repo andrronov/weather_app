@@ -64,7 +64,8 @@ import duringDayWeatherComponentVue from '@/components/duringDayWeatherComponent
 import astronomyComponent from '@/components/astronomyComponent.vue';
 import nextDaysComponent from '@/components/duringWeekComponent.vue';
 import windComponent from "@/components/windComponent.vue";
-import { fetchCurrentWeatherDataCelsius } from "../APIs/currentWeatherCelsiusApi";
+// import { fetchCurrentWeatherDataCelsius } from "../APIs/currentWeatherCelsiusApi";
+import {fetchCurrentWeatherDataCelsius} from '../APIs/weatherApi.js';
 import welcomeModalVue from "../components/modals/welcomeModal.vue";
 import headerComponent from "@/components/dom/headerComponent.vue";
 import allCitiesModal from "@/components/modals/allCitiesModal.vue";

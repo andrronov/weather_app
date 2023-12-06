@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { fetchDuringWeek } from "@/APIs/duringWeek";
+import { fetchDuringWeek } from "../APIs/weatherApi.js";
 export default {
 data(){
   return{
@@ -58,9 +58,7 @@ methods:{
   }
 },
 mounted(){
-  setTimeout(() => {
     this.fetchWeek();
-  }, 100);
 }
 }
 </script>
